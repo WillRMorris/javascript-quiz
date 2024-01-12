@@ -1,7 +1,7 @@
  const welcome = document.getElementById("welcome");
  const startBtn = document.getElementById("start-quiz");
  const body = document.body;
- 
+ var whichQuestion = "none";
  
  var timer = {
     min: 0,
@@ -50,6 +50,11 @@ var quiz = {
    answerThree: document.createElement("button"),
    answerFour: document.createElement("button"),
    cardWrapper: document.createElement("div"),
+   qArray: ["string" , "array" , "for", "primitive"],
+   qPrimA: this.answerFour,
+   qForA: this.answerOne,
+   qStringA: this.answerThree,
+   qArrayA: this.answerTwo,
    generate: function() {
       body.appendChild(this.cardWrapper);
       this.cardWrapper.appendChild(this.card);
@@ -69,11 +74,11 @@ var quiz = {
 
       this.cardWrapper.setAttribute( "style" , "border: 10px solid black; box-shadow: 5px 0px 15px black; padding: 50px, 100px; width:60%; left: 20%; min-height: 300px; ");
 
-
       return;
    },
    primitivesQuestion: function() {
       this.question.textContent = "Which of the following is not a primitive data type?";
+      //answer is D
       this.answerOne.textContent = "A: integers";
       this.answerTwo.textContent = " B: string";
       this.answerThree.textContent = "C: boolean";
@@ -82,6 +87,7 @@ var quiz = {
    },
    forQuestion: function() {
       this.question.textContent = "which type of statement creates a loop of repeated code?";
+      //answer is A
       this.answerOne.textContent = "A: a for statement ";
       this.answerTwo.textContent = " B: an if statement";
       this.answerThree.textContent = "C: a this statement";
@@ -90,30 +96,77 @@ var quiz = {
    },
    stringQuestion: function() {
       this.question.textContent = "What characters when surrounding text do not make it a string?";
+      //Answer is C
       this.answerOne.textContent = "A: \" \" ";
       this.answerTwo.textContent = " B: \' \'";
       this.answerThree.textContent = "C: / /";
-      this.answerFour.textContent = "D: \` \`";
+      this.answerFour.textContent = "D: \` \`";;
       return;
    },
    arrayQuestion: function() {
       this.question.textContent = "What is stored in an array?";
+      //Answer is B
       this.answerOne.textContent = "A: an integer";
       this.answerTwo.textContent = " B: a series of like values";
       this.answerThree.textContent = "C: a series of un-like values";
       this.answerFour.textContent = "D: for loops";
       return;
    },
+   //builds the next question
+   nextQuestion: function() {
+         var q = this.qArray.splice(Math.floor(Math.random()* this.qArray.length), 1 );
+         if (q[0] === "string"){
+            this.stringQuestion();
+            whichQuestion = q[0];
+         }
+         else if (q[0] === "array"){
+            this.arrayQuestion();
+            whichQuestion = q[0];
 
+         }
+         else if (q[0] === "for"){
+            this.forQuestion();
+            whichQuestion = q[0];
+
+         }
+         else if (q[0] === "primitive"){
+            this.primitivesQuestion();
+            whichQuestion = q[0];
+
+         }
+         else {
+            console.log("end");
+         }
+         return;
+   }
 
 }
 
  startBtn.addEventListener("click", function() {
-    //  timer.start();
     welcome.style.display = "none";
     timer.generate();
+    //  timer.start();
     quiz.generate();
-    quiz.stringQuestion();
+    quiz.nextQuestion();
     return;
-   } )
-   
+   } );
+   quiz.answerOne.addEventListener("click", function(){
+      if(whichQuestion === "for"){
+         quiz.nextQuestion ();
+      };
+   });
+   quiz.answerTwo.addEventListener ("click" , function(){
+      if(whichQuestion === "array"){
+         quiz.nextQuestion ();
+      };
+   });
+   quiz.answerThree.addEventListener("click", function(){
+      if(whichQuestion === "string"){
+         quiz.nextQuestion ();
+      };
+   });
+   quiz.answerFour.addEventListener("click" , function(){
+      if(whichQuestion === "primitive"){
+         quiz.nextQuestion ();
+      };
+   });
