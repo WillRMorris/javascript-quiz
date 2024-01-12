@@ -72,14 +72,38 @@ var quiz = {
 
       return;
    },
-   primitvesQuestion: function() {
+   primitivesQuestion: function() {
       this.question.textContent = "Which of the following is not a primitive data type?";
       this.answerOne.textContent = "A: integers";
       this.answerTwo.textContent = " B: string";
       this.answerThree.textContent = "C: boolean";
       this.answerFour.textContent = "D: Arrays";
       return;
-   }
+   },
+   forQuestion: function() {
+      this.question.textContent = "which type of statement creates a loop of repeated code?";
+      this.answerOne.textContent = "A: a for statement ";
+      this.answerTwo.textContent = " B: an if statement";
+      this.answerThree.textContent = "C: a this statement";
+      this.answerFour.textContent = "D: a loop statement";
+      return;
+   },
+   stringQuestion: function() {
+      this.question.textContent = "What characters when surrounding text do not make it a string?";
+      this.answerOne.textContent = "A: \" \" ";
+      this.answerTwo.textContent = " B: \' \'";
+      this.answerThree.textContent = "C: / /";
+      this.answerFour.textContent = "D: \` \`";
+      return;
+   },
+   arrayQuestion: function() {
+      this.question.textContent = "What is stored in an array?";
+      this.answerOne.textContent = "A: an integer";
+      this.answerTwo.textContent = " B: a series of like values";
+      this.answerThree.textContent = "C: a series of un-like values";
+      this.answerFour.textContent = "D: for loops";
+      return;
+   },
 
 
 }
@@ -89,7 +113,7 @@ var quiz = {
     welcome.style.display = "none";
     timer.generate();
     quiz.generate();
-    quiz.primitvesQuestion();
+    quiz.stringQuestion();
     return;
    } )
    
