@@ -25,19 +25,18 @@ body {
     box-shadow: 5px 0px 15px black;    
 }
 
-
 #start-wrapper {
     flex: 1 0 0px;
     position: relative;
-    margin: 16px 16px 16px 20px;
+    display: flex;
+    justify-content: center;
+    margin: 16px 16px 16px 16px;
     min-height: 50px;
 }
 #start-quiz {
-    position: absolute;
-    left: 40%;
-    top: 0px;
-    bottom: 0px;
-    margin: auto;
+    /* bottom: 0px; */
+    margin: 0px;
+    text-align: center;
 }
 .btn {
     border: none;
@@ -50,7 +49,7 @@ body {
     font-size: 22px;
     line-height: 22px;
     padding: 14px 34px;
-    text-align: right;
+    text-align: left;
     cursor: pointer;
     margin: 10px 100px 15px 10px;
     min-height: 30px;
@@ -84,19 +83,32 @@ button[disabled] {
     margin: 15px;
     padding: 0px 20px;
     display: flex;
-
-
+    
+    
   }
-@media (max-width: 690px) {
-  .btn {
-    font-size: 1rem;
-    margin: 16px 0px 0px 0px;
-    padding: 10px 15px;
-  }
+  @media (max-width: 690px) {
+    .btn {
+      font-size: 1rem;
+      margin: 16px 0px 0px 0px;
+      padding: 10px 15px;
+    }
+    .card-body {
+      font-size: 1rem;
+    }
+    h2{
+      font-size: 1.2rem;
+    }
 }
 
 @media (max-width: 500px) {
   .btn {
     font-size: 0.8rem;
   }
+  .card-body {
+    font-size: .8rem;
+  }
+  h2{
+    font-size: 1rem;
+  }
 }
+
