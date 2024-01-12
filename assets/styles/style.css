@@ -8,6 +8,7 @@ body {
 }
 .card {
     position: absolute;
+    background-color: var(--off-white);
     top: 15%;
     left: 30%;
     width: 40%;

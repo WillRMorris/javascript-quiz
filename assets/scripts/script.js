@@ -1,8 +1,12 @@
+ //TODO additional UI elements to interact with highscore.
+ //TODO find proper local storage code and make function for getting final high score and storing it. 
+ //TODO js to move additional UI around at quiz beginings. Button also needs to function.
  const welcome = document.getElementById("welcome");
  const startBtn = document.getElementById("start-quiz");
  const body = document.body;
  var whichQuestion = "none";
  
+ //Timer object. intiates timer and holds related elements and functions.
  var timer = {
     min: 0,
     sec: 0,
@@ -41,7 +45,8 @@
       return;
    }
 } 
-
+//quiz object. Intializes and holds the majority of elements and functions that quiz contains/performs. primary object.
+//TODO create end page object and/or generation inside quiz
 var quiz = {
    card: document.createElement("div"),
    question: document.createElement("h2"),
@@ -51,10 +56,6 @@ var quiz = {
    answerFour: document.createElement("button"),
    cardWrapper: document.createElement("div"),
    qArray: ["string" , "array" , "for", "primitive"],
-   qPrimA: this.answerFour,
-   qForA: this.answerOne,
-   qStringA: this.answerThree,
-   qArrayA: this.answerTwo,
    generate: function() {
       body.appendChild(this.cardWrapper);
       this.cardWrapper.appendChild(this.card);
@@ -112,7 +113,7 @@ var quiz = {
       this.answerFour.textContent = "D: for loops";
       return;
    },
-   //builds the next question
+   //builds the next question randomly, removing it from the sequence
    nextQuestion: function() {
          var q = this.qArray.splice(Math.floor(Math.random()* this.qArray.length), 1 );
          if (q[0] === "string"){
@@ -134,6 +135,7 @@ var quiz = {
             whichQuestion = q[0];
 
          }
+         //if there are no more questions the test ends
          else {
             console.log("end");
          }
@@ -141,32 +143,81 @@ var quiz = {
    }
 
 }
-
- startBtn.addEventListener("click", function() {
-    welcome.style.display = "none";
-    timer.generate();
-    //  timer.start();
-    quiz.generate();
-    quiz.nextQuestion();
-    return;
+//function runs if the right answer is chosen.
+function ifCorrect (){
+   setTimeout(() => {
+      body.setAttribute("style" , "background-color: #65F004;")
+   }, 1);
+   setTimeout(() => {
+      body.setAttribute("style" , "background-color: var(--off-white);")
+   }, 500);
+};
+//function runs if the wrong answer is chosen.
+//TODO ifWrong time penalty calling timer object. 
+function ifWrong () {
+   setTimeout(() => {
+      body.setAttribute("style" , "background-color: #E32301;")
+   }, 1);
+   setTimeout(() => {
+      body.setAttribute("style" , "background-color: var(--off-white);")
+   }, 500);
+};
+//intiates even listeners. was going to do all this in quiz object but was running into errors put it out here for the time being. 
+function buttonsWork () {
+   startBtn.addEventListener("click", function() {
+      welcome.style.display = "none";
+      timer.generate();
+       timer.start();
+      quiz.generate();
+      quiz.nextQuestion();
+      return;
    } );
+
    quiz.answerOne.addEventListener("click", function(){
       if(whichQuestion === "for"){
-         quiz.nextQuestion ();
+         setTimeout(() => {
+            body.setAttribute("style" , "background-color: #65F004;")
+         }, 1);
+         setTimeout(() => {
+            body.setAttribute("style" , "background-color: var(--off-white);")
+         }, 500);
       };
+      quiz.nextQuestion ();
    });
    quiz.answerTwo.addEventListener ("click" , function(){
       if(whichQuestion === "array"){
-         quiz.nextQuestion ();
+         setTimeout(() => {
+            body.setAttribute("style" , "background-color: #65F004;")
+         }, 1);
+         setTimeout(() => {
+            body.setAttribute("style" , "background-color: var(--off-white);")
+         }, 500);
       };
+      quiz.nextQuestion ();
    });
    quiz.answerThree.addEventListener("click", function(){
       if(whichQuestion === "string"){
-         quiz.nextQuestion ();
+         setTimeout(() => {
+            body.setAttribute("style" , "background-color: #65F004;")
+         }, 1);
+         setTimeout(() => {
+            body.setAttribute("style" , "background-color: var(--off-white);")
+         }, 500);
       };
+      quiz.nextQuestion ();
    });
    quiz.answerFour.addEventListener("click" , function(){
       if(whichQuestion === "primitive"){
-         quiz.nextQuestion ();
+         setTimeout(() => {
+            body.setAttribute("style" , "background-color: #65F004;")
+         }, 1);
+         setTimeout(() => {
+            body.setAttribute("style" , "background-color: var(--off-white);")
+         }, 500);
       };
+      quiz.nextQuestion ();
    });
+}
+//starts buttons working, which starts the rest of the code running.
+buttonsWork();
+      
