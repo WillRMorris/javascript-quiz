@@ -43,18 +43,21 @@
          return;
       }, 1000);
       return;
+   },
+   calculateScore: function (){
+      let score = this.min*60 + this.sec;
+      return score;
    }
 } 
 //quiz object. Intializes and holds the majority of elements and functions that quiz contains/performs. primary object.
-//TODO create end page object and/or generation inside quiz
 var quiz = {
    card: document.createElement("div"),
+   cardWrapper: document.createElement("div"),
    question: document.createElement("h2"),
    answerOne: document.createElement("button"),
    answerTwo: document.createElement("button"),
    answerThree: document.createElement("button"),
    answerFour: document.createElement("button"),
-   cardWrapper: document.createElement("div"),
    qArray: ["string" , "array" , "for", "primitive"],
    generate: function() {
       body.appendChild(this.cardWrapper);
@@ -71,8 +74,6 @@ var quiz = {
       this.answerThree.setAttribute ("class" , "btn");
       this.answerFour.setAttribute ("class" , "btn");
       this.card.setAttribute("style", "display: flex; flex-direction: column; flex-wrap: nowrap;");
-
-
       this.cardWrapper.setAttribute( "style" , "border: 10px solid black; box-shadow: 5px 0px 15px black; padding: 50px, 100px; width:60%; left: 20%; min-height: 300px; ");
 
       return;
@@ -137,11 +138,56 @@ var quiz = {
          }
          //if there are no more questions the test ends
          else {
+            this.cardWrapper.setAttribute("style" , "display: none;")
+            end.finish();
             console.log("end");
          }
          return;
    }
 
+}
+var end = {
+   card: document.createElement("div"),
+   cardWrapper: document.createElement("div"),
+   header: document.createElement("div"),
+   heading: document.createElement("h2"),
+   subtitle: document.createElement("div"),
+   form: document.createElement("form"),
+   formWrapper: document.createElement("div"),
+   intialsInput: document.createElement("input"),
+   submit: document.createElement("input"),
+   intitals: "",
+   finished: false,
+   
+   finish: function() {
+      this.finished = true;
+      score = timer.calculateScore();
+      body.appendChild(this.cardWrapper);
+      this.cardWrapper.appendChild(this.card);
+      this.cardWrapper.appendChild (this.header);
+      this.header.appendChild(this.heading);
+      this.cardWrapper.appendChild(this.subtitle);
+      this.cardWrapper.appendChild(this.formWrapper);
+      this.formWrapper.appendChild(this.form);
+      this.form.appendChild(this.intialsInput);
+      this.form.appendChild(this.submit);
+
+      this.cardWrapper.setAttribute("class", "card");
+      this.intialsInput.setAttribute("type" , "text");
+      this.submit.setAttribute("type" , "submit");
+
+      this.form.setAttribute("style" , "display: flex; align-items: center;justify-contents: center; height:22px;");
+      this.intialsInput.setAttribute("class" , "text-input");
+      this.submit.setAttribute("id" , "submit");
+
+      this.heading.setAttribute("style" , "text-align: left; margin: 15px;")
+      this.card.setAttribute("style", "display: flex; flex-direction: column; flex-wrap: nowrap;");
+      this.cardWrapper.setAttribute( "style" , " padding: 50px, 100px; width:60%; left: 20%; justify-content: flex-start;");
+
+      this.heading.textContent = "Finished!";
+      this.subtitle.textContent = "your final score is: " + score;
+   },
+   
 }
 //function runs if the right answer is chosen.
 function ifCorrect (){
@@ -153,7 +199,7 @@ function ifCorrect (){
    }, 500);
 };
 //function runs if the wrong answer is chosen.
-//TODO ifWrong time penalty calling timer object. 
+//TODO subtract time if wrong.
 function ifWrong () {
    setTimeout(() => {
       body.setAttribute("style" , "background-color: #E32301;")
@@ -175,49 +221,45 @@ function buttonsWork () {
 
    quiz.answerOne.addEventListener("click", function(){
       if(whichQuestion === "for"){
-         setTimeout(() => {
-            body.setAttribute("style" , "background-color: #65F004;")
-         }, 1);
-         setTimeout(() => {
-            body.setAttribute("style" , "background-color: var(--off-white);")
-         }, 500);
-      };
+            ifCorrect();
+         }
+      else {
+         ifWrong();
+      }
       quiz.nextQuestion ();
    });
    quiz.answerTwo.addEventListener ("click" , function(){
       if(whichQuestion === "array"){
-         setTimeout(() => {
-            body.setAttribute("style" , "background-color: #65F004;")
-         }, 1);
-         setTimeout(() => {
-            body.setAttribute("style" , "background-color: var(--off-white);")
-         }, 500);
-      };
+         ifCorrect();
+      }
+      else {
+         ifWrong();
+      }
       quiz.nextQuestion ();
    });
    quiz.answerThree.addEventListener("click", function(){
       if(whichQuestion === "string"){
-         setTimeout(() => {
-            body.setAttribute("style" , "background-color: #65F004;")
-         }, 1);
-         setTimeout(() => {
-            body.setAttribute("style" , "background-color: var(--off-white);")
-         }, 500);
-      };
+         ifCorrect();
+
+      }
+      else {
+         ifWrong();
+      }
       quiz.nextQuestion ();
    });
    quiz.answerFour.addEventListener("click" , function(){
       if(whichQuestion === "primitive"){
-         setTimeout(() => {
-            body.setAttribute("style" , "background-color: #65F004;")
-         }, 1);
-         setTimeout(() => {
-            body.setAttribute("style" , "background-color: var(--off-white);")
-         }, 500);
-      };
+         ifCorrect();
+      }
+      else {
+         ifWrong();
+      }
       quiz.nextQuestion ();
    });
 }
 //starts buttons working, which starts the rest of the code running.
 buttonsWork();
+
+
+
       
