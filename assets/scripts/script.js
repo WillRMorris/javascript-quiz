@@ -47,9 +47,19 @@
       return;
    },
    calculateScore: function (){
-      clearInterval(this.time);
       let score = this.min*60 + this.sec;
+      clearInterval(this.time);
       return score;
+   },
+   subtractTime: function() {
+      if( this.sec < 15){
+         var x = 15-this.sec;
+         timer.min -= 1;
+         timer.sec = 60 -x;
+      }
+      else{
+         this.sec -= 15;
+      };
    }
 } 
 //quiz object. Intializes and holds the majority of elements and functions that quiz contains/performs. primary object.
@@ -61,7 +71,7 @@ var quiz = {
    answerTwo: document.createElement("button"),
    answerThree: document.createElement("button"),
    answerFour: document.createElement("button"),
-   qArray: ["string" , "array" , "for", "primitive"],
+   qArray: [],
    generate: function() {
       body.appendChild(this.cardWrapper);
       this.cardWrapper.appendChild(this.card);
@@ -70,6 +80,9 @@ var quiz = {
       this.card.appendChild(this.answerTwo);
       this.card.appendChild(this.answerThree);
       this.card.appendChild(this.answerFour);
+
+      quiz.qArray = ["string" , "array" , "for", "primitive"];
+      
 
       this.cardWrapper.setAttribute("class", "card");
       this.answerOne.setAttribute ("class" , "btn");
@@ -143,6 +156,7 @@ var quiz = {
          else {
             end.finish();
             console.log("end");
+            timer.clockWrapper.setAttribute("style" , "display: none;");
          }
          return;
    }
@@ -164,7 +178,8 @@ var end = {
    backButton: document.createElement("button"),
    clearScoresBtn: document.createElement("button"),
    finished: false,
-
+   array: [],
+   
    finish: function() {
       end.finished = true;
       score = timer.calculateScore();
@@ -231,9 +246,9 @@ var end = {
       welcome.setAttribute("style" , "display: none;");
 
       //--------------------score table-------------------------\\
-      var array = sortStorage();
-      for(var i =0; i< array.length; i++){
-         var sc =array[i];
+      end.array = sortStorage();
+      for(var i =0; i< end.array.length; i++){
+         var sc =end.array[i];
          var li = new localScore(i , sc[0] , sc[1]);
       }
 
@@ -249,7 +264,7 @@ class localScore {
       this.line = document.createElement("li");
       this.line.setAttribute ("class" , "high-score");
       end.scoreTable.appendChild(this.line);
-      this.line.textContent = `${this.name} -- ${this.score}`
+      this.line.textContent = `${this.name} - ${this.score}`
    };
 
    
@@ -294,6 +309,9 @@ function ifCorrect (){
 //function runs if the wrong answer is chosen.
 //TODO subtract time if wrong.
 function ifWrong () {
+
+   timer.subtractTime();
+
    setTimeout(() => {
       body.setAttribute("style" , "background-color: #E32301;")
    }, 1);
@@ -360,6 +378,17 @@ function buttonsWork () {
       end.scorePage();
       console.log(localStorage);
    });
+   end.clearScoresBtn.addEventListener("click" , function(){
+      localStorage.clear();
+      for(var i = end.array.length-1; i >= 0; i){
+         let del = end.scoreTable.children[i];
+         del.remove();
+      }
+   });
+   end.backButton.addEventListener("click" , function(){
+      welcome.setAttribute("style" , "display: flex;");
+      end.scoreTableWrapper.setAttribute("style" , "display: none;");
+   })
 }
 //starts buttons working, which starts the rest of the code running.
 buttonsWork();

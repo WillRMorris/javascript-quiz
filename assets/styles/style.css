@@ -94,12 +94,14 @@ button[disabled] {
 }
 #scoreboard {
   color: black;
+
 }
 .high-score {
   background-color: #9c06c280;
   margin: 5px 10px;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 20px;
+  color: black;
   text-align: left;
 }
 
