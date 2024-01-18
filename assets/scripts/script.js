@@ -13,6 +13,7 @@
     time: null,
     clock: document.createElement("div"),
     clockWrapper: document.createElement("div"),
+    //makes timer element and sets style
     generate: function (){
         body.appendChild(this.clockWrapper);
         this.clockWrapper.appendChild(this.clock);
@@ -20,6 +21,7 @@
         this.clock.setAttribute ("style" , "font-family: monospace; color: #57CE04; font-size: 40px; flex: 1 0 0px; text-align: center;");
         return;
     },
+    //starts timer, governs it's function
     start: function(){ 
        timer.min = 1;
        timer.sec = 15;
@@ -46,11 +48,13 @@
       }, 1000);
       return;
    },
+   //converts time to score and returns
    calculateScore: function (){
       let score = this.min*60 + this.sec;
       clearInterval(this.time);
       return score;
    },
+   //subtracts time from the clock when called
    subtractTime: function() {
       if( this.sec < 15){
          var x = 15-this.sec;
@@ -72,6 +76,8 @@ var quiz = {
    answerThree: document.createElement("button"),
    answerFour: document.createElement("button"),
    qArray: [],
+
+   //generates the quiz page and sets styles.
    generate: function() {
       body.appendChild(this.cardWrapper);
       this.cardWrapper.appendChild(this.card);
@@ -94,6 +100,7 @@ var quiz = {
 
       return;
    },
+   //next four function are for each of the four questions I currently have in the test. Admitedly I could have done this more DRY with a class constructor, but I didn't figure those out in js until near the end of this project.
    primitivesQuestion: function() {
       this.question.textContent = "Which of the following is not a primitive data type?";
       //answer is D
@@ -162,6 +169,7 @@ var quiz = {
    }
 
 }
+//end object. Governs the two pages that occur after the test is finished.
 var end = {
    card: document.createElement("div"),
    cardWrapper: document.createElement("div"),
@@ -180,6 +188,7 @@ var end = {
    finished: false,
    array: [],
    
+   //generates the finish page, sets styles. This is the page with the input for intials.
    finish: function() {
       end.finished = true;
       score = timer.calculateScore();
@@ -210,6 +219,8 @@ var end = {
       this.heading.textContent = "Finished!";
       this.subtitle.textContent = "your final score is: " + score;
    },
+
+   //generates and sets styles for the score page, which has the highscore table.
    scorePage: function () {
       end.finished = true;
       body.appendChild(this.scoreTableWrapper);
@@ -219,9 +230,6 @@ var end = {
       this.scoreTableWrapper.appendChild(this.buttonWrapper);
       this.buttonWrapper.appendChild(this.backButton);
       this.buttonWrapper.appendChild(this.clearScoresBtn);
-
-
-
       
       this.scoreTableWrapper.setAttribute("class" , "card");
       this.scoreTableWrapper.setAttribute("style" ,"display: flex; width: 300px;");
@@ -237,7 +245,6 @@ var end = {
       this.clearScoresBtn.setAttribute("class" , "btn");
       this.clearScoresBtn.setAttribute("style" , "font-size: 15px; text-wrap: nowrap; padding: 15px; margin: 10px 20px;");
       this.clearScoresBtn.textContent = "clear scores";
-
 
       this.cardWrapper.setAttribute("style" , "display: none;");
       this.formWrapper.setAttribute("style" , "display: none;")
@@ -255,7 +262,7 @@ var end = {
    },
    
 }
-
+//class for each score, creates a new li element child to the scoreboard for each score
 class localScore {
    constructor(n, name, score) {
       this.n = n;
@@ -269,7 +276,7 @@ class localScore {
 
    
 }
-
+//runs through local storage grabs the largest score and puts it into an array of two-value arrays with name and score, then removes the value from local storage and repeats. Afterwords all value are reprinted back to local storage and array is returned.
 function sortStorage() {
    var array = [];
    
@@ -297,7 +304,7 @@ function sortStorage() {
    };
    return array;
 }
-//function runs if the right answer is chosen.
+//function runs if the right answer is chosen. screen flashes green
 function ifCorrect (){
    setTimeout(() => {
       body.setAttribute("style" , "background-color: #65F004;")
@@ -306,8 +313,7 @@ function ifCorrect (){
       body.setAttribute("style" , "background-color: var(--off-white);")
    }, 500);
 };
-//function runs if the wrong answer is chosen.
-//TODO subtract time if wrong.
+//function runs if the wrong answer is chosen. screen flashes red and time is subtracted from timer
 function ifWrong () {
 
    timer.subtractTime();
