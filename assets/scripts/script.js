@@ -328,6 +328,10 @@ function ifWrong () {
 //intiates even listeners. was going to do all this in quiz object but was running into errors put it out here for the time being. 
 function buttonsWork () {
    viewScores.addEventListener("click" , function(){
+      for(var i = end.scoreTable.children.length-1; i >= 0; i--){
+         let del = end.scoreTable.children[i];
+         del.remove();
+      };
       end.scorePage();
       return;
    });
@@ -380,13 +384,15 @@ function buttonsWork () {
    end.submit.addEventListener("click" , function(){
       event.preventDefault();
       let intials = end.intialsInput.value;
-      localStorage.setItem(intials, timer.calculateScore());
+      if(timer.calculateScore() > localStorage.getItem(intials)){
+         localStorage.setItem(intials, timer.calculateScore());
+      };
       end.scorePage();
       console.log(localStorage);
    });
    end.clearScoresBtn.addEventListener("click" , function(){
       localStorage.clear();
-      for(var i = end.array.length-1; i >= 0; i){
+      for(var i = end.scoreTable.children.length-1; i >= 0; i--){
          let del = end.scoreTable.children[i];
          del.remove();
       }
@@ -394,6 +400,10 @@ function buttonsWork () {
    end.backButton.addEventListener("click" , function(){
       welcome.setAttribute("style" , "display: flex;");
       end.scoreTableWrapper.setAttribute("style" , "display: none;");
+      for(var i = end.scoreTable.children.length-1; i >= 0; i--){
+         let del = end.scoreTable.children[i];
+         del.remove();
+      };
    })
 }
 //starts buttons working, which starts the rest of the code running.
