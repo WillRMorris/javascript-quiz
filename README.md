@@ -1,6 +1,6 @@
 # javascript-quiz
 a short timed quiz about basic js principles
-- quiz functions as intended, with eac answer taking you to the next question
+- quiz functions as intended, with each answer taking you to the next question
 - screen flashes green for a correct answer, and red for a wrong one
 - timer starts as soon as quiz does and runs properly
 - time is subtracted for incorect answers.
